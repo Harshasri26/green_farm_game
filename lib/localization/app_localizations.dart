@@ -1,0 +1,166 @@
+import 'package:flutter/material.dart';
+
+class AppLocalizations {
+  final Locale locale;
+  AppLocalizations(this.locale);
+
+  static const Map<String, Map<String, String>> _localizedValues = {
+    'en': {
+      'app_name': 'Green Farm Game',
+      'welcome_farmer': 'Welcome Farmer 🌾',
+      'login': 'Login',
+      'login_phone': 'Login using phone number',
+      'enter_phone': 'Enter phone number',
+      'phone_hint': '+91XXXXXXXXXX',
+      'send_otp': 'Send OTP',
+      'demo_otp': 'Demo: enter any number, then any 6 digits on next screen.',
+      'otp_verification': 'OTP Verification',
+      'enter_otp': 'Enter OTP',
+      'verify': 'Verify',
+      'enter_otp_6': 'Enter 6-digit OTP',
+      'verification_failed': 'Verification failed',
+      'choose_language': 'Choose Language',
+      'lang_en': 'English',
+      'lang_hi': 'हिन्दी',
+      'lang_te': 'తెలుగు',
+      'your_details': 'Your Details',
+      'complete_before_dashboard': 'Complete your profile to access the dashboard.',
+      'name': 'Name',
+      'name_hint': 'e.g. Ramesh Kumar',
+      'location': 'Location',
+      'location_hint': 'e.g. Andhra Pradesh',
+      'crop': 'Crop',
+      'crop_hint': 'e.g. Rice, Wheat',
+      'farm_size': 'Farm size (acres)',
+      'farm_size_hint': 'e.g. 2',
+      'save': 'Save',
+      'name_required': 'Name is required',
+      'location_required': 'Location is required',
+      'crop_required': 'Crop is required',
+      'profile': 'My Profile',
+      'go_to_farm': 'Go to Farm',
+      'green_farm': 'Green Farm',
+      'today_mission': "Today's Mission",
+      'today_mission_msg': 'Water crops before 8 AM',
+      'reward': 'Reward',
+      'reward_msg': 'You earned 50 coins',
+      'reminder': 'Reminder',
+      'reminder_msg': 'Check soil moisture today',
+      'acres': 'acres',
+      'edit_profile': 'Edit profile',
+    },
+    'hi': {
+      'app_name': 'ग्रीन फार्म गेम',
+      'welcome_farmer': 'स्वागत किसान 🌾',
+      'login': 'लॉगिन',
+      'login_phone': 'फोन नंबर से लॉगिन करें',
+      'enter_phone': 'फोन नंबर दर्ज करें',
+      'phone_hint': '+91XXXXXXXXXX',
+      'send_otp': 'OTP भेजें',
+      'demo_otp': 'डेमो: कोई नंबर डालें, फिर अगले पेज पर कोई 6 अंक।',
+      'otp_verification': 'OTP सत्यापन',
+      'enter_otp': 'OTP दर्ज करें',
+      'verify': 'सत्यापित करें',
+      'enter_otp_6': '6 अंकों का OTP दर्ज करें',
+      'verification_failed': 'सत्यापन विफल',
+      'choose_language': 'भाषा चुनें',
+      'lang_en': 'English',
+      'lang_hi': 'हिन्दी',
+      'lang_te': 'తెలుగు',
+      'your_details': 'आपका विवरण',
+      'complete_before_dashboard': 'डैशबोर्ड तक पहुंचने के लिए प्रोफाइल पूरी करें।',
+      'name': 'नाम',
+      'name_hint': 'जैसे रमेश कुमार',
+      'location': 'स्थान',
+      'location_hint': 'जैसे आंध्र प्रदेश',
+      'crop': 'फसल',
+      'crop_hint': 'जैसे धान, गेहूं',
+      'farm_size': 'खेत का आकार (एकड़)',
+      'farm_size_hint': 'जैसे 2',
+      'save': 'सेव करें',
+      'name_required': 'नाम आवश्यक है',
+      'location_required': 'स्थान आवश्यक है',
+      'crop_required': 'फसल आवश्यक है',
+      'profile': 'मेरी प्रोफ़ाइल',
+      'go_to_farm': 'फार्म पर जाएं',
+      'green_farm': 'ग्रीन फार्म',
+      'today_mission': "आज का मिशन",
+      'today_mission_msg': 'सुबह 8 बजे से पहले फसलों में पानी दें',
+      'reward': 'इनाम',
+      'reward_msg': 'आपने 50 सिक्के कमाए',
+      'reminder': 'याद दिलाना',
+      'reminder_msg': 'आज मिट्टी की नमी जांचें',
+      'acres': 'एकड़',
+      'edit_profile': 'प्रोफ़ाइल संपादित करें',
+    },
+    'te': {
+      'app_name': 'గ్రీన్ ఫార్మ్ గేమ్',
+      'welcome_farmer': 'వ్యవసాయదారునికి స్వాగతం 🌾',
+      'login': 'లాగిన్',
+      'login_phone': 'ఫోన్ నంబర్‌తో లాగిన్ చేయండి',
+      'enter_phone': 'ఫోన్ నంబర్ నమోదు చేయండి',
+      'phone_hint': '+91XXXXXXXXXX',
+      'send_otp': 'OTP పంపండి',
+      'demo_otp': 'డెమో: ఏ నంబర్ ఎంటర్ చేయండి, తర్వాత తదుపరి స్క్రీన్‌లో ఏ 6 అంకెలు.',
+      'otp_verification': 'OTP ధ్రువీకరణ',
+      'enter_otp': 'OTP నమోదు చేయండి',
+      'verify': 'నిర్ధారించండి',
+      'enter_otp_6': '6 అంకెల OTP నమోదు చేయండి',
+      'verification_failed': 'ధ్రువీకరణ విఫలమైంది',
+      'choose_language': 'భాష ఎంచుకోండి',
+      'lang_en': 'English',
+      'lang_hi': 'हिन्दी',
+      'lang_te': 'తెలుగు',
+      'your_details': 'మీ వివరాలు',
+      'complete_before_dashboard': 'డాష్‌బోర్డ్‌కు ప్రవేశించడానికి ప్రొఫైల్ పూర్తి చేయండి.',
+      'name': 'పేరు',
+      'name_hint': 'ఉదా. రమేష్ కుమార్',
+      'location': 'స్థానం',
+      'location_hint': 'ఉదా. ఆంధ్రప్రదేశ్',
+      'crop': 'పంట',
+      'crop_hint': 'ఉదా. వరి, గోధుమ',
+      'farm_size': 'వ్యవసాయ భూమి (ఎకరాలు)',
+      'farm_size_hint': 'ఉదా. 2',
+      'save': 'సేవ్ చేయండి',
+      'name_required': 'పేరు అవసరం',
+      'location_required': 'స్థానం అవసరం',
+      'crop_required': 'పంట అవసరం',
+      'profile': 'నా ప్రొఫైల్',
+      'go_to_farm': 'ఫార్మ్‌కు వెళ్లండి',
+      'green_farm': 'గ్రీన్ ఫార్మ్',
+      'today_mission': "ఈ రోజు మిషన్",
+      'today_mission_msg': 'ఉదయం 8 గంటలకు ముందు పంటలకు నీరు పోయండి',
+      'reward': 'బహుమతి',
+      'reward_msg': 'మీరు 50 నాణేలు సంపాదించారు',
+      'reminder': 'జ్ఞాపకం',
+      'reminder_msg': 'ఈ రోజు మట్టి తేమ తనిఖీ చేయండి',
+      'acres': 'ఎకరాలు',
+      'edit_profile': 'ప్రొఫైల్ సవరించండి',
+    },
+  };
+
+  String get(String key) {
+    final map = _localizedValues[locale.languageCode] ?? _localizedValues['en']!;
+    return map[key] ?? _localizedValues['en']![key] ?? key;
+  }
+
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
+  }
+}
+
+class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+  const AppLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) =>
+      ['en', 'hi', 'te'].contains(locale.languageCode);
+
+  @override
+  Future<AppLocalizations> load(Locale locale) async {
+    return AppLocalizations(locale);
+  }
+
+  @override
+  bool shouldReload(_) => false;
+}
