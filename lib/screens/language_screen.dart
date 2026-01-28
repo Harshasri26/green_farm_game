@@ -29,13 +29,13 @@ class LanguageScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: SizedBox(
-        width: 200, // fixed width for better alignment
-        height: 50, // button height
+        width: 200,
+        height: 50,
         child: ElevatedButton(
-          onPressed: () {
-            // Save chosen language in app (can use shared_preferences)
-            // Then navigate to profile or home
-            Navigator.pushReplacementNamed(context, '/profile', arguments: code);
+          onPressed: () async {
+            await LanguagePref.setLanguage(code);
+            if (!context.mounted) return;
+            Navigator.pushReplacementNamed(context, '/profile');
           },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

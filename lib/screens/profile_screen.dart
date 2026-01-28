@@ -128,6 +128,25 @@ class ProfileScreen extends StatelessWidget {
                 Icons.notifications,
               ),
 
+              const SizedBox(height: 24),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/home');
+                  },
+                  icon: const Icon(Icons.agriculture),
+                  label: const Text("Go to Farm"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 30),
             ],
           ),

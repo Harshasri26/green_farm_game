@@ -12,10 +12,10 @@ class LocalStorage {
   }
 
   static Future<void> saveProfile(Map<String, String> profile) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    profile.forEach((key, value) async {
-      await prefs.setString(key, value);
-    });
+    final prefs = await SharedPreferences.getInstance();
+    for (final e in profile.entries) {
+      await prefs.setString(e.key, e.value);
+    }
   }
 
   static Future<Map<String, String>> getProfile() async {
