@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "840116736815",
+    "project_id": "green-farm-game",
+    "storage_bucket": "green-farm-game.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840116736815:android:e013249782896b9ac107da",
+        "android_client_info": {
+          "package_name": "com.example.green_farm_game"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmCQM5DcAEATC1hIhPYTqZHpyLDq6KxL0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
