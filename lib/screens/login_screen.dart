@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuthException;
 
+import '../localization/app_localizations.dart';
 import '../auth/send_otp_stub.dart'
     if (dart.library.html) '../auth/send_otp_web.dart' as send_otp;
 
@@ -18,9 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _loading = false;
 
   Future<void> _sendOtp() async {
+    final l = AppLocalizations.of(context);
     final phone = phoneController.text.trim();
     if (phone.isEmpty) {
-      setState(() => _error = 'Enter phone number');
+      setState(() => _error = l.get('enter_phone'));
       return;
     }
     final normalized = phone.startsWith('+') ? phone : '+91$phone';
@@ -34,10 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushNamed(context, '/otp', arguments: result);
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
-      setState(() => _error = e.message ?? 'Verification failed');
+      setState(() => _error = e.message ?? l.get('verification_failed'));
     } catch (e) {
       if (!mounted) return;
-      setState(() => _error = 'Something went wrong');
+      setState(() => _error = l.get('verification_failed'));
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -51,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Colors.green.shade50,
       body: Center(
@@ -74,24 +77,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   color: Colors.green,
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  "Welcome Farmer 🌾",
-                  style: TextStyle(
+                Text(
+                  l.get('welcome_farmer'),
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  "Login using phone number",
-                  style: TextStyle(color: Colors.grey),
+                Text(
+                  l.get('login_phone'),
+                  style: TextStyle(color: Colors.grey.shade700),
                 ),
                 const SizedBox(height: 20),
                 TextField(
                   controller: phoneController,
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                    hintText: "+91XXXXXXXXXX",
+                    hintText: l.get('phone_hint'),
                     prefixIcon: const Icon(Icons.phone),
                     errorText: _error.isEmpty ? null : _error,
                     border: OutlineInputBorder(
@@ -110,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                       backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
                     ),
                     child: _loading
                         ? const SizedBox(
@@ -120,13 +124,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white,
                             ),
                           )
-                        : const Text("Send OTP"),
+                        : Text(l.get('send_otp')),
                   ),
                 ),
                 if (!kIsWeb) ...[
                   const SizedBox(height: 12),
                   Text(
-                    "Demo: enter any number, then any 6 digits on next screen.",
+                    l.get('demo_otp'),
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey.shade600,

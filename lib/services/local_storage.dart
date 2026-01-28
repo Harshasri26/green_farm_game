@@ -19,12 +19,19 @@ class LocalStorage {
   }
 
   static Future<Map<String, String>> getProfile() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     return {
       'name': prefs.getString('name') ?? '',
       'crop': prefs.getString('crop') ?? '',
       'location': prefs.getString('location') ?? '',
       'farmSize': prefs.getString('farmSize') ?? '',
     };
+  }
+
+  static Future<bool> isProfileComplete() async {
+    final p = await getProfile();
+    return (p['name'] ?? '').trim().isNotEmpty &&
+        (p['location'] ?? '').trim().isNotEmpty &&
+        (p['crop'] ?? '').trim().isNotEmpty;
   }
 }

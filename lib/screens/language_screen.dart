@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../localization/app_localizations.dart';
+import '../utils/app_locale.dart';
 import '../utils/language_pref.dart';
 
 class LanguageScreen extends StatelessWidget {
@@ -6,26 +8,30 @@ class LanguageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Choose Language",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              l.get('choose_language'),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 30),
-            languageTile(context, "English", 'en'),
-            languageTile(context, "हिन्दी", 'hi'),
-            languageTile(context, "తెలుగు", 'te'),
+            _languageTile(context, l.get('lang_en'), 'en'),
+            _languageTile(context, l.get('lang_hi'), 'hi'),
+            _languageTile(context, l.get('lang_te'), 'te'),
           ],
         ),
       ),
     );
   }
 
-  Widget languageTile(BuildContext context, String lang, String code) {
+  Widget _languageTile(BuildContext context, String label, String code) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: SizedBox(
@@ -34,16 +40,19 @@ class LanguageScreen extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             await LanguagePref.setLanguage(code);
+            AppLocale.set(Locale(code));
             if (!context.mounted) return;
-            Navigator.pushReplacementNamed(context, '/profile');
+            Navigator.pushReplacementNamed(context, '/details');
           },
           style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
           ),
           child: Text(
-            lang,
+            label,
             style: const TextStyle(fontSize: 18),
           ),
         ),

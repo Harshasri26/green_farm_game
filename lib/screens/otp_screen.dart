@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../localization/app_localizations.dart';
 import '../auth/verify_otp_stub.dart'
     if (dart.library.html) '../auth/verify_otp_web.dart' as verify_otp;
 
@@ -17,7 +18,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final List<FocusNode> _focusNodes =
       List.generate(6, (_) => FocusNode());
 
-  String errorText = "";
+  String _errorText = '';
   bool _verifying = false;
 
   @override
@@ -28,13 +29,14 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   Future<void> _verifyOtp() async {
+    final l = AppLocalizations.of(context);
     final otp = _controllers.map((c) => c.text).join();
     if (otp.length != 6) {
-      setState(() => errorText = "Enter 6-digit OTP");
+      setState(() => _errorText = l.get('enter_otp_6'));
       return;
     }
     setState(() {
-      errorText = "";
+      _errorText = '';
       _verifying = true;
     });
     final args = ModalRoute.of(context)?.settings.arguments;
@@ -44,11 +46,11 @@ class _OtpScreenState extends State<OtpScreen> {
     if (ok) {
       Navigator.pushReplacementNamed(context, '/language');
     } else {
-      setState(() => errorText = "Verification failed");
+      setState(() => _errorText = l.get('verification_failed'));
     }
   }
 
-  Widget otpBox(int index) {
+  Widget _otpBox(int index) {
     return SizedBox(
       width: 45,
       child: TextField(
@@ -58,15 +60,15 @@ class _OtpScreenState extends State<OtpScreen> {
         textAlign: TextAlign.center,
         maxLength: 1,
         decoration: const InputDecoration(
-          counterText: "",
+          counterText: '',
           border: OutlineInputBorder(),
         ),
         onChanged: (value) {
           if (value.isNotEmpty && index < 5) {
-            _focusNodes[index + 1].requestFocus(); // 👉 auto move next
+            _focusNodes[index + 1].requestFocus();
           }
           if (value.isEmpty && index > 0) {
-            _focusNodes[index - 1].requestFocus(); // 👈 backspace
+            _focusNodes[index - 1].requestFocus();
           }
         },
       ),
@@ -75,9 +77,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("OTP Verification"),
+        title: Text(l.get('otp_verification')),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
       ),
@@ -87,19 +90,22 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Enter OTP",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              Text(
+                l.get('enter_otp'),
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(6, otpBox),
+                children: List.generate(6, _otpBox),
               ),
               const SizedBox(height: 15),
-              if (errorText.isNotEmpty)
+              if (_errorText.isNotEmpty)
                 Text(
-                  errorText,
+                  _errorText,
                   style: const TextStyle(color: Colors.red),
                 ),
               const SizedBox(height: 20),
@@ -118,7 +124,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           color: Colors.white,
                         ),
                       )
-                    : const Text("Verify"),
+                    : Text(l.get('verify')),
               ),
             ],
           ),
