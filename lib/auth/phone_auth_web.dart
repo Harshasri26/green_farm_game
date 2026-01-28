@@ -7,6 +7,7 @@ class PhoneAuthWeb {
     return await auth.signInWithPhoneNumber(
       phone,
       RecaptchaVerifier(
+        auth: auth,
         container: 'recaptcha-container',
         size: RecaptchaVerifierSize.normal,
         theme: RecaptchaVerifierTheme.light,
