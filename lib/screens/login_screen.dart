@@ -1,111 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../services/local_storage.dart';
-import 'profile_screen.dart';
-import 'home_screen.dart';
+import '../auth/phone_auth_web.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController phoneController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final phoneController = TextEditingController();
+  ConfirmationResult? confirmationResult;
 
-  String _verificationId = '';
-  bool codeSent = false;
-  final TextEditingController otpController = TextEditingController();
+  Future<void> sendOtp() async {
+    confirmationResult =
+        await FirebaseAuth.instance.signInWithPhoneNumber(
+      phoneController.text,
+    );
+
+    Navigator.pushNamed(context, '/otp',
+        arguments: confirmationResult);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            if (!codeSent) ...[
+      backgroundColor: Colors.green.shade50,
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          width: 360,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(color: Colors.black12, blurRadius: 10),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.agriculture,
+                  size: 60, color: Colors.green),
+              const SizedBox(height: 16),
+              const Text(
+                "Welcome Farmer 🌾",
+                style: TextStyle(
+                    fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Login using phone number",
+                style: TextStyle(color: Colors.grey),
+              ),
+              const SizedBox(height: 20),
               TextField(
                 controller: phoneController,
-                decoration: InputDecoration(labelText: 'Phone number'),
+                decoration: InputDecoration(
+                  hintText: "+91XXXXXXXXXX",
+                  prefixIcon: const Icon(Icons.phone),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  await _verifyPhone();
-                },
-                child: Text('Send OTP'),
-              ),
-            ] else ...[
-              TextField(
-                controller: otpController,
-                decoration: InputDecoration(labelText: 'Enter OTP'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  await _verifyOtp();
-                },
-                child: Text('Verify OTP'),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: sendOtp,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14)),
+                    backgroundColor: Colors.green,
+                  ),
+                  child: const Text("Send OTP"),
+                ),
               ),
             ],
-          ],
+          ),
         ),
       ),
     );
-  }
-
-  // Step 1: Send OTP
-  Future<void> _verifyPhone() async {
-    String phone = phoneController.text.trim();
-
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phone,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        // Auto-login (usually on mobile)
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed: ${e.message}')),
-        );
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        setState(() {
-          codeSent = true;
-          _verificationId = verificationId;
-        });
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
-
-  // Step 2: Verify OTP
-  Future<void> _verifyOtp() async {
-    String smsCode = otpController.text.trim();
-
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId,
-      smsCode: smsCode,
-    );
-
-    try {
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
-
-      // ✅ Check if profile exists
-      var profile = await LocalStorage.getProfile();
-      if (profile != null && profile['name'] != null && profile['name'] != '') {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => HomeScreen()));
-      } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (_) => ProfileScreen()));
-      }
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.message}')),
-      );
-    }
   }
 }

@@ -1,63 +1,134 @@
 import 'package:flutter/material.dart';
-import '../services/local_storage.dart';
-import 'home_screen.dart';
 
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController cropController = TextEditingController();
-  final TextEditingController locationController = TextEditingController();
-  final TextEditingController farmSizeController = TextEditingController();
+  Widget infoChip(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.green.shade50,
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: Colors.green.shade200),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: Colors.green),
+          const SizedBox(width: 6),
+          Text(label,
+              style: const TextStyle(
+                  fontSize: 14, fontWeight: FontWeight.w500)),
+        ],
+      ),
+    );
+  }
+
+  Widget messageBox(String title, String message, IconData icon) {
+    return Container(
+      width: 300, // 👈 keeps message boxes short
+      padding: const EdgeInsets.all(14),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          )
+        ],
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: Colors.green.shade100,
+            child: Icon(icon, color: Colors.green),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15)),
+                const SizedBox(height: 4),
+                Text(message,
+                    style: const TextStyle(
+                        fontSize: 13, color: Colors.black54)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Farmer Profile')),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
+      backgroundColor: Colors.grey.shade100,
+      appBar: AppBar(
+        title: const Text("My Profile"),
+        backgroundColor: Colors.green,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: SingleChildScrollView(
           child: Column(
             children: [
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
-                validator: (v) => v!.isEmpty ? 'Enter Name' : null,
+              const SizedBox(height: 20),
+
+              /// Avatar
+              CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.green,
+                child: const Icon(Icons.person, size: 45, color: Colors.white),
               ),
-              TextFormField(
-                controller: cropController,
-                decoration: InputDecoration(labelText: 'Crop'),
+
+              const SizedBox(height: 10),
+
+              const Text(
+                "Farmer User",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              TextFormField(
-                controller: locationController,
-                decoration: InputDecoration(labelText: 'Location'),
+
+              const SizedBox(height: 20),
+
+              /// Info Chips
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                alignment: WrapAlignment.center,
+                children: [
+                  infoChip(Icons.location_on, "Andhra Pradesh"),
+                  infoChip(Icons.agriculture, "Rice Crop"),
+                  infoChip(Icons.language, "English"),
+                ],
               ),
-              TextFormField(
-                controller: farmSizeController,
-                decoration: InputDecoration(labelText: 'Farm Size'),
+
+              const SizedBox(height: 25),
+
+              /// Messages
+              messageBox(
+                "Today's Mission",
+                "Water crops before 8 AM",
+                Icons.task_alt,
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await LocalStorage.saveProfile({
-                        'name': nameController.text,
-                        'crop': cropController.text,
-                        'location': locationController.text,
-                        'farmSize': farmSizeController.text,
-                      });
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      );
-                    }
-                  },
-                  child: Text('Save & Continue'))
+              messageBox(
+                "Reward",
+                "You earned 50 coins",
+                Icons.stars,
+              ),
+              messageBox(
+                "Reminder",
+                "Check soil moisture today",
+                Icons.notifications,
+              ),
+
+              const SizedBox(height: 30),
             ],
           ),
         ),
