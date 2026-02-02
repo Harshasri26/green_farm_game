@@ -12,7 +12,6 @@ import 'screens/language_screen.dart';
 import 'screens/details_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/home_screen.dart';
-import 'screens/leaderboard_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,7 +69,6 @@ class _MyAppState extends State<MyApp> {
         '/details': (context) => const DetailsScreen(),
         '/profile': (context) => const ProfileScreen(),
         '/home': (context) => const HomeScreen(),
-        '/leaderboard': (context) => const LeaderboardScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

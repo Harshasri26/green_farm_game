@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../localization/app_localizations.dart';
 import '../services/local_storage.dart';
-import '../services/xp_streak_service.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({super.key});
@@ -73,10 +72,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
       'crop': crop,
       'farmSize': farmSize,
     });
-
-    // Update panchayat in user progress
-    final xpStreakService = XpStreakService();
-    await xpStreakService.updatePanchayat(location);
 
     if (!mounted) return;
     setState(() => _loading = false);
